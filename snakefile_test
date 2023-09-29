@@ -1,0 +1,36 @@
+import os
+from glob import glob
+import re
+
+datadir = "/home/wecapstor3/capn/mpo1217/km3net/KM3NeT_00000133"
+filepaths = glob(f"{datadir}/*_S.root")
+def extract_runnumbers(filepaths):
+        for filepath in filepaths:
+                m = re.search(r"KM3NeT_\d{8}_(\d{8})_S.root", filepath)
+                if m:
+                        yield int(m[1])
+
+runs2 = list(extract_runnumbers(filepaths))
+runs = [13451,13452]
+
+
+
+rule all:
+    input: expand("../Data/DomData_Runs/{n}_10.h5", n=runs)
+
+
+rule extractData:
+    input: os.path.join(datadir, "KM3NeT_00000133_000{run}_S.root")
+    output: "../Data/DomData_Runs/{run}_10.h5"
+    shell:
+        """
+        julia --heap-size-hint=6000MB TerminalScripts/DomData.jl KM3NeT_00000133_00014422.detx {input}
+        """
+
+rule sort:
+    input: datadir
+    output: "../Data/DomData_Runs/{run1}_10.h5", "../Data/DomData_Runs/{run2}_10.h5", "../Data/DomData_Runs/{run3}_10.h5", "../Data/DomData_Runs/{run4}_10.h5", "../Data/DomData_Runs/{run5}_10.h5", "../Data/DomData_Runs/{run6}_10.h5"
+    shell:
+        """
+            julia --heap-size-hint=6000MB TerminalScripts/DomData3.jl KM3NeT_00000133_00014422.detx {input} [{wildcards.run1},{wildcards.run2},{wildcards.run3},{wildcards.run4},{wildcards.run5},{wildcards.run6}]
+        """
