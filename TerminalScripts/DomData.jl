@@ -7,7 +7,7 @@ Usage:
 
 Options:
   -l SLICELENGTH            The amount of Summaryslices compressed to one new Datapoint [default: 6000]
-  -s STORAGEPATH            The Storagepath for the h5 Output-files [default: ../Data/DomData_Runs]
+  -s STORAGEPATH            The Storagepath for the h5 Output-files [default: ../Data]
   -h --help                 Show this screen.
   --version                 Show version.
 
@@ -24,7 +24,7 @@ using ToolBox
 
 function main()
     detector = Detector(args["DETECTOR"])
-    DomData(args["DATAINPUT"], detector, "../Data/DomData_Runs", slice_length=parse(Int32, args["-l"]))
+    Data(args["DATAINPUT"], detector, "../Data", slice_length=parse(Int32, args["-l"]))
     print(string("Runs", args["DATAINPUT"], "finished"))
 end
 

@@ -6,7 +6,7 @@ Usage:
     create_DomData.jl --version
 
 Options:
-  -d DATAINPUT              The folder in which it looks for the DomData_Run files [default: ../Data/DomData_Runs]
+  -d DATAINPUT              The folder in which it looks for the DomData_Run files [default: ../Data]
   -l SLICELENGTH            The amount of Summaryslices compressed to one new Datapoint [default: 6000]
   -s STORAGEPATH            The Storagepath for the h5 Output-files [default: ../Data/DomData_Doms]
   -h --help                 Show this screen.
@@ -26,7 +26,7 @@ using DelimitedFiles
 function main()
     Doms = readdlm("Dom_Ids.txt", Int64)[:,1]
     for i in (parse(Int32, args["START"]):parse(Int32, args["END"]))
-      DomDataV3(Doms[i], string(args["-d"]), string(args["-s"]), slice_length=parse(Int64, args["-l"]))
+      DomData(Doms[i], string(args["-d"]), string(args["-s"]), slice_length=parse(Int64, args["-l"]))
     end
     open(string("../Data/DomData_Doms/result",args["START"],"_",args["END"],".txt"), "w") do file
       write(file, '0')
