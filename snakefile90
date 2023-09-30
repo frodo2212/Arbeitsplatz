@@ -12,18 +12,18 @@ def extract_runnumbers(filepaths):
                         yield int(m[1])
 
 runs2 = list(extract_runnumbers(filepaths))
-runs = runs2[100:150]
+runs = runs2[1:50]
 
 
 
 rule all:
-    input: expand("../Data/Runs_sl10Min/{n}_10.h5", n=runs2)
+    input: expand("../Data/Runs_sl90Min/{n}_90.h5", n=runs)
 
 
 rule extractData:
     input: os.path.join(datadir, "KM3NeT_00000133_000{run}_S.root")
-    output: "../Data/Runs_sl10Min/{run}_10.h5"
+    output: "../Data/Runs_sl90Min/{run}_90.h5"
     shell:
         """
-        julia --heap-size-hint=6000M TerminalScripts/DomData.jl KM3NeT_00000133_00014422.detx {input}
+        julia --heap-size-hint=6000M TerminalScripts/DomData.jl KM3NeT_00000133_00014422.detx {input} -l=54000
         """
