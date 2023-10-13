@@ -16,16 +16,17 @@ def extract_runnumbers(filepaths):
 
 runs = list(extract_runnumbers(filepaths))
 length_min = int(slice_length/600)
-
+storagepath = "../Data/Runs_sl{lm}Min/".format(lm=length_min)
+endung = "_{lm}.h5".format(lm=length_min)
 
 rule all:
-    input: expand("../Data/Runs_sl{length_min}Min/{n}_10.h5", n=runs)
+    input: expand(storagepath+"{n}"+endung, n=runs)
 
 
 rule extractData:
     input: os.path.join(datadir, "KM3NeT_00000133_000{run}_S.root")
-    output: "../Data/Runs_sl{length_min}Min/{run}_10.h5"
+    output: storagepath+"{run}"+endung
     shell:
         """
-        julia --heap-size-hint=6000M TerminalScripts/DomData.jl KM3NeT_00000133_00014422.detx {input} -l={slice_length}
+        julia --heap-size-hint=6000M TerminalScripts/DomData.jl KM3NeT_00000133_00014422.detx {input} -l {slice_length}
         """

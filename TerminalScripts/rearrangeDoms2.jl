@@ -25,9 +25,8 @@ using DelimitedFiles
 function main()
     Doms = readdlm("Dom_Ids.txt", Int64)[:,1]
     slice_length = parse(Int32, args["-l"])
-    sl = Int32(slice_length/600)
     for i in (parse(Int32, args["START"]):parse(Int32, args["END"]))
-      DomData(Doms[i], string("../Data/Runs_sl",sl,"Min"), string(args["-s"]), slice_length=slice_length)
+      DomData(Doms[i], string(args["-s"]), slice_length=slice_length)
     end
     open(string("../Data/DomData_Doms/result",args["START"],"_",args["END"],".txt"), "w") do file
       write(file, '0')

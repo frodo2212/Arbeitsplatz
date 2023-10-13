@@ -25,5 +25,5 @@ rule extractData:
     output: "../Data/DomData_Doms/result{a}_{e}.txt"
     shell:
         """
-        julia TerminalScripts/rearrangeData2.jl {wildcards.a} {wildcards.e} -l={slice_length}
+        julia TerminalScripts/rearrangeDoms2.jl {wildcards.a} {wildcards.e} -l {slice_length}
         """
