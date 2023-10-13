@@ -33,10 +33,11 @@ function main()
     #     end
     # end
     # neuer versuch das zu strukturieren
+    sl = parse(Int32, args["-l"])
     for run in (args["RUNA"]:args["RUNB"])
         filename = string(args["DATAINPUT"],"KM3NeT_00000133_000",run,"_S.root")
         if filename in files
-            Data(args["DATAINPUT"], run, detector, "../Data", slice_length=parse(Int32, args["-l"]))
+            Data(args["DATAINPUT"], run, detector, string("../Data/Runs_sl",sl/600,"Min"), slice_length=sl)
         end
     end 
 end
