@@ -1,5 +1,6 @@
+slice_length = 6000
 
-#to automatise the bounds
+#to automatise the bounds then i could scan over all Doms given a Dom_Ids.txt/list_Doms.jl
 #Dom_count = 378
 #with open('Dom_Ids.txt') as f:
 #    lines = f.read().split('\n')
@@ -9,9 +10,8 @@
 #        doms.append(int(line))
 
 #just for testing
-#bounds = [(1,54),(55,108),(108,162),(163,216),(217,270),(271,324),(325,378)]
-#bounds = [(1,27),(28,54),(55,81),(82,108),(108,135),(136,162),(163,190),(191,216),(217,244),(245,270),(271,298),(299,324),(325,352),(353,378)]
 bounds = [(1,20),(21,40),(41,60),(61,80),(81,100),(101,120),(121,140),(141,160),(161,180),(181,200),(201,220),(221,240),(241,260),(261,280),(281,300),(301,320),(321,340),(341,360),(361,378)]
+
 
 rule all:
     input: expand("../Data/DomData_Doms/result{a[0]}_{a[1]}.txt", a=bounds)
@@ -25,5 +25,5 @@ rule extractData:
     output: "../Data/DomData_Doms/result{a}_{e}.txt"
     shell:
         """
-        julia TerminalScripts/rearrangeData2.jl {wildcards.a} {wildcards.e}
+        julia TerminalScripts/rearrangeData2.jl {wildcards.a} {wildcards.e} -l={slice_length}
         """

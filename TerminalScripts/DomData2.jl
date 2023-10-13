@@ -37,7 +37,7 @@ function main()
     for run in (args["RUNA"]:args["RUNB"])
         filename = string(args["DATAINPUT"],"KM3NeT_00000133_000",run,"_S.root")
         if filename in files
-            Data(args["DATAINPUT"], run, detector, string("../Data/Runs_sl",sl/600,"Min"), slice_length=sl)
+            Data(args["DATAINPUT"], run, detector, string("../Data/Runs_sl",Int32(sl/600),"Min"), slice_length=sl)
         end
     end 
 end

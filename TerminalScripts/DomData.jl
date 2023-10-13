@@ -14,6 +14,7 @@ Options:
 """
 
 #irgend ne gute möglichkeit direkt zu überprüfen ob die eingaben sinnvoll sind - bei l nur Int erlauben
+#-s Storagepath wird im Moment nicht beachtet
 
 
 using DocOpt
@@ -25,7 +26,7 @@ using ToolBox
 function main()
     detector = Detector(args["DETECTOR"])
     sl = parse(Int32, args["-l"])
-    Data(args["DATAINPUT"], detector, string("../Data/Runs_sl",sl/600,"Min"), slice_length=sl)
+    Data(args["DATAINPUT"], detector, string("../Data/Runs_sl",Int32(sl/600),"Min"), slice_length=sl)
     print(string("Runs", args["DATAINPUT"], "finished"))
 end
 
