@@ -26,12 +26,19 @@ using ToolBox
 function main()
     detector = Detector(args["DETECTOR"])
     files = glob("*_S.root", args["DATAINPUT"]) 
-    for filename in files
-        Runnumber = parse(Int32, filename[collect(findlast("000", filename))[3]+1:collect(findlast("000", filename))[3]+5])
-        if Runnumber >= Int64(args["RUNA"]) && Runnumber <= Int64(args["RUNB"])
-            Data(filename, detector, "../Data", slice_length=parse(Int32, args["-l"]))
+    # for filename in files
+    #     Runnumber = parse(Int32, filename[collect(findlast("000", filename))[3]+1:collect(findlast("000", filename))[3]+5])
+    #     if Runnumber >= Int64(args["RUNA"]) && Runnumber <= Int64(args["RUNB"])
+    #         Data(filename, detector, "../Data", slice_length=parse(Int32, args["-l"]))
+    #     end
+    # end
+    # neuer versuch das zu strukturieren
+    for run in (args["RUNA"]:args["RUNB"])
+        filename = string(args["DATAINPUT"],"KM3NeT_00000133_000",run,"_S.root")
+        if filename in files
+            Data(args["DATAINPUT"], run, detector, "../Data", slice_length=parse(Int32, args["-l"]))
         end
-    end
+    end 
 end
 
 main()

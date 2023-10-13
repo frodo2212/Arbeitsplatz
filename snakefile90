@@ -15,6 +15,7 @@ runs2 = list(extract_runnumbers(filepaths))
 runs = runs2[1:50]
 
 
+
 rule all:
     input: expand("../Data/Runs_sl90Min/{n}_90.h5", n=runs)
 
@@ -26,3 +27,5 @@ rule extractData:
         """
         julia --heap-size-hint=6000M TerminalScripts/DomData.jl KM3NeT_00000133_00014422.detx {input} -l 54000
         """
+
+# julia --heap-size-hint=6000M TerminalScripts/DomData.jl KM3NeT_00000133_00014422.detx KM3NeT_00000133_00013298_S.root -l 54000

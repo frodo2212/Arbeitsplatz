@@ -24,7 +24,7 @@ using ToolBox
 
 function main()
     detector = Detector(args["DETECTOR"])
-    Data(args["DATAINPUT"], detector, "../Data", slice_length=parse(Int32, args["-l"]))
+    Data(args["DATAINPUT"], detector, "./", slice_length=parse(Int32, args["-l"]))
     print(string("Runs", args["DATAINPUT"], "finished"))
 end
 
