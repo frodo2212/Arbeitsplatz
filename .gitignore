@@ -1,5 +1,6 @@
 funktionenablage.jl
 tests.jl
+GLMtests.jl
 temp_pictures
 Dom_Ids.txt
 plotten.jl
